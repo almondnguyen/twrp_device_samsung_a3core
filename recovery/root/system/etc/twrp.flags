@@ -1,0 +1,32 @@
+# mount point   fstype              device                      device2               flags
+# Logical partitions
+/system           ext4    /dev/block/mapper/system                          wait,logical,flags=backup=1;display="System";
+/product          ext4    /dev/block/mapper/product                         wait,logical,flags=backup=1;display="Product";
+/vendor           ext4    /dev/block/mapper/vendor                          wait,logical,flags=backup=1;display="Vendor";
+/system_ext       ext4    /dev/block/mapper/system_ext                      wait,logical,flags=backup=1;display="system_ext";
+
+# Linked partitions
+/system_image     emmc    /dev/block/mapper/system                          flags=backup=1;flashimg;display="System Image"
+/vendor_image     emmc    /dev/block/mapper/vendor                          flags=backup=1;flashimg;display="Vendor Image"
+/product_image    emmc    /dev/block/mapper/product                         flags=backup=1;flashimg;display="Product Image"
+/system_ext_image emmc    /dev/block/mapper/system_ext                      flags=backup=1;flashimg;display="system_ext Image"
+
+# Removable storage
+/external_sd      auto    /dev/block/mmcblk1p1        /dev/block/mmcblk1    flags=storage;wipeingui;removable;display="External SDcard";
+/usb-otg          auto    /dev/block/sda1             /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable;
+
+# Common physical partitions
+/boot             emmc    /dev/block/platform/bootdevice/by-name/boot
+/recovery         emmc    /dev/block/platform/bootdevice/by-name/recovery   flags=backup=1
+/data             f2fs    /dev/block/platform/bootdevice/by-name/userdata   flags=backup=1;display="Userdata";length=-20480;wipeingui
+/cache            ext4    /dev/block/platform/bootdevice/by-name/cache      flags=backup=1;display="Cache";wipeingui
+/optics_image     emmc    /dev/block/platform/bootdevice/by-name/optics     flags=backup=1;flashimg;display="Optics Image"
+/prism_image      emmc    /dev/block/platform/bootdevice/by-name/prism      flags=backup=1;flashimg;display="Prism Image"
+/efs              ext4    /dev/block/platform/bootdevice/by-name/efs        flags=backup=1;display="EFS"
+/sec_efs          ext4    /dev/block/platform/bootdevice/by-name/sec_efs    flags=backup=1;subpartitionof=/efs;
+
+# a3core
+/socko            ext4    /dev/block/by-name/socko                          flags=backup=1;display="SoC Kernel modules"
+/odmko            ext4    /dev/block/by-name/odmko                          flags=backup=1;display="ODM Kernel modules"
+
+/mnt/vendor       ext4    /dev/block/by-name/prodnv                         flags=backup=1;display="Prod NVRAM"
