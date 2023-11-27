@@ -73,8 +73,6 @@ service gpsd /vendor/bin/gpsd
     group gps system shell inet net_raw wifi
 
 on init
-    # Apply strict SELinux checking of PROT_EXEC on mmap/mprotect calls.
-    write /sys/fs/selinux/checkreqprot 0
     start healthd
     chown system system /sys/bus/iio/devices/trigger0/name
     chown system system /sys/bus/iio/devices/iio:device1/buffer
