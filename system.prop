@@ -1,8 +1,3 @@
 ro.product.first_api_level=30
-ro.treble.enabled=true
 sys.usb.controller=musb-hdrc.0.auto
-
-ro.product.board=m168
-ro.board.platform=sp9863a
-
 persist.service.adb.root=1
