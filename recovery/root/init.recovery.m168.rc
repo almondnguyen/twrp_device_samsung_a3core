@@ -1,4 +1,4 @@
-inport /init.recovery.loaddrv.rc
+import /init.recovery.loaddrv.rc
 
 on init
     start healthd
