@@ -24,7 +24,5 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     fastbootd
 
-# jemalloc
+# disable scudo
 PRODUCT_DISABLE_SCUDO := true
-PRODUCT_PACKAGES += \
-    jemalloc
