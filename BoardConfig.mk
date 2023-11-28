@@ -112,9 +112,6 @@ TW_INCLUDE_CRYPTO := false
 TW_INCLUDE_CRYPTO_FBE := false
 TW_INCLUDE_FBE_METADATA_DECRYPT := false
 
-# Platform
-PRODUCT_DISABLE_SCUDO := true # Go devices does not support Scudo
-
 # TWRP Configuration
 BOARD_HAS_NO_SELECT_BUTTON := true
 RECOVERY_SDCARD_ON_DATA := true
