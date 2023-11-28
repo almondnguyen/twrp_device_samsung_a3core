@@ -80,6 +80,19 @@ on fs
     #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack
     mkdir /data/misc/bluetooth 0770 system system    
 
+#al: load necessary kernel modules in socko and odmko
+on post-fs
+    # from vendor/etc/init/init.md.rc
+    insmod ${ro.vendor.ko.mount.point}/socko/ant_check_div.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/nt36xxx_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/chipone-tddi_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/gcore_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/ilitek-tddi.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/gcore_7202h.ko
+    
+    insmod ${ro.vendor.ko.mount.point}/socko/pvrsrvkm.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/sprdwl_ng.ko
+
 on post-fs-data
     # We chown/chmod /data again so because mount is run as root + defaults
     chown system system /data
