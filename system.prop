@@ -1,3 +1,4 @@
 ro.product.first_api_level=30
 sys.usb.controller=musb-hdrc.0.auto
 persist.service.adb.root=1
+ro.vendor.ko.mount.point=/mnt/vendor

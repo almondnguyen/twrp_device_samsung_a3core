@@ -1,0 +1,12 @@
+#al: load necessary kernel modules in socko and odmko
+on post-fs
+    # from vendor/etc/init/init.md.rc
+    insmod ${ro.vendor.ko.mount.point}/socko/ant_check_div.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/nt36xxx_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/chipone-tddi_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/gcore_ss.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/ilitek-tddi.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/gcore_7202h.ko
+    
+    insmod ${ro.vendor.ko.mount.point}/socko/pvrsrvkm.ko
+    insmod ${ro.vendor.ko.mount.point}/socko/sprdwl_ng.ko

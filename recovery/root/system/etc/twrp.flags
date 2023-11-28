@@ -26,7 +26,7 @@
 /sec_efs          ext4    /dev/block/by-name/sec_efs                        flags=backup=1;subpartitionof=/efs;
 
 # a3core
-/socko            ext4    /dev/block/by-name/socko                          flags=backup=1;display="SoC Kernel modules"
-/odmko            ext4    /dev/block/by-name/odmko                          flags=backup=1;display="ODM Kernel modules"
-
 /mnt/vendor       ext4    /dev/block/by-name/prodnv                         flags=backup=1;display="Prod NVRAM"
+/mnt/vendor/socko ext4    /dev/block/by-name/socko                          flags=backup=1;display="SoC Kernel modules"
+/mnt/vendor/odmko ext4    /dev/block/by-name/odmko                          flags=backup=1;display="ODM Kernel modules"
+
