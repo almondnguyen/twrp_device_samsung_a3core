@@ -1,84 +1,15 @@
-import /init.recovery.loaddrv.rc
-
-on init
-    start healthd
-    chown system system /sys/bus/iio/devices/trigger0/name
-    chown system system /sys/bus/iio/devices/iio:device1/buffer
-    chown system system /sys/bus/iio/devices/iio:device1/buffer/length
-    chown system system /sys/bus/iio/devices/iio:device1/buffer/enable
-    chown system system /sys/bus/iio/devices/iio:device1/trigger/current_trigger
-    chmod 660 /sys/bus/iio/devices/trigger0/name
-    chmod 660 /sys/bus/iio/devices/iio:device1/buffer/length
-    chmod 660 /sys/bus/iio/devices/iio:device1/buffer/enable
-    chmod 660 /sys/bus/iio/devices/iio:device1/trigger/current_trigger
-
-    export PATH /sbin:/system/bin:/vendor/bin
-    export SECONDARY_STORAGE /storage/sdcard0
-
-    mkdir /storage
-    mkdir /storage/sdcard1
-    mkdir /storage/sdcard0
-    symlink /storage/sdcard0 /mnt/sdcard
-    symlink /system/etc/bluetooth /etc/bluetooth
-
-    mkdir /systeminfo 0777 system system
-
-    loglevel 7
-
-    chown system root /proc/mdbg/assert
-    chown system root /proc/mdbg/wdtirq
-    chown system root /proc/mdbg/at_cmd
-    chown system root /proc/mdbg/loopcheck
-
-    chmod 760 /proc/mdbg/assert
-    chmod 760 /proc/mdbg/wdtirq
-    chmod 760 /proc/mdbg/at_cmd
-    chmod 760 /proc/mdbg/loopcheck
+on init    
+    # unlink /efs > /mnt/vendor/efs
+    rm /efs
+    mkdir /efs
+    mkdir /sec_efs
 
     chown system root /proc/cpwcn/wdtirq
     chmod 766 /proc/cpwcn/wdtirq
 
-on boot
+on late-init
+    setprop ro.debuggable 1
     setprop sys.usb.configfs 1
-    write /sys/block/mmcblk0boot0/force_ro 0
-    write /sys/block/mmcblk0boot1/force_ro 0
-
-    chown system system /dev/iio:device1
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/iio/trigger/current_trigger
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/batch
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/logctl
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/calibrator_cmd
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/calibrator_data
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/enable
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/flush
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/iio
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/version
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/op_download
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/mag_cali_flag
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/sensorhub
-    chown system system /sys/class/sprd_sensorhub/sensor_hub/data_to_dynamic
-
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/iio/trigger/current_trigger
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/batch
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/logctl
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/calibrator_cmd
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/calibrator_data
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/enable
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/flush
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/iio
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/version
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/op_download
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/mag_cali_flag
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/sensorhub
-    chmod 660 /sys/class/sprd_sensorhub/sensor_hub/data_to_dynamic
-    chmod 660 /sys/class/power_supply/battery/charger.0/stop_charge
-    chmod 660 /sys/class/power_supply/battery/charger.0/jeita_control
-    chmod 660 /sys/class/power_supply/battery/input_current_limit
-    chmod 660 /sys/class/power_supply/battery/constant_charge_current
-
-on fs
-    #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack
-    mkdir /data/misc/bluetooth 0770 system system    
 
 #al: load necessary kernel modules in socko and odmko
 on post-fs
@@ -92,59 +23,3 @@ on post-fs
     
     insmod ${ro.vendor.ko.mount.point}/socko/pvrsrvkm.ko
     insmod ${ro.vendor.ko.mount.point}/socko/sprdwl_ng.ko
-
-on post-fs-data
-    # We chown/chmod /data again so because mount is run as root + defaults
-    chown system system /data
-    chmod 0771 /data
-    # We restorecon /data in case the userdata partition has been reset.
-    restorecon /data
-    mkdir /data/misc 01771 system misc
-    #mkdir /data/misc/bluedroid 0770 bluetooth net_bt_stack
-    mkdir /data/misc/bluetooth 0770 system system
-    copy /system/etc/bluetooth/bt_stack.conf /data/misc/bluedroid/bt_stack.conf
-    chown bluetooth system /data/misc/bluedroid/bt_stack.conf
-    chmod 0640 /data/misc/bluedroid/bt_stack.conf
-
-    chmod 666 /sys/module/shub_core/parameters/gryo_firms
-    chmod 666 /sys/module/shub_core/parameters/acc_firms
-    chmod 666 /sys/module/shub_core/parameters/mag_firms
-    chmod 666 /sys/module/shub_core/parameters/pressure_firms
-    chmod 666 /sys/module/shub_core/parameters/light_firms
-    chmod 666 /sys/module/shub_core/parameters/prox_firms
-    chmod 666 /sys/module/firmware_class/parameters/path
-    chmod 666 /sys/module/shub_core/parameters/sensor_fusion_mode
-
-    #add wifi
-    mkdir /data/vendor/wifi 0770 wifi wifi
-    mkdir /data/vendor/wifi/wpa 0770 wifi wifi
-    mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
-    mkdir /data/system 0770 system system
-    mkdir /etc/wifi 0770 wifi wifi
-    write /data/vendor/wifi/fwpath sta_mode
-    chmod 660 /data/vendor/wifi/fwpath
-    chown wifi wifi /data/vendor/wifi/fwpath
-    rmdir /data/system/wpa_supplicant
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-
-    #to observe dnsmasq.leases file for dhcp information
-    chown dhcp system /data/misc/dhcp
-    setprop wifi.interface wlan0
-    mkdir /data/misc/dhcp6c 0770 dhcp dhcp
-    chown dhcp system /data/misc/dhcp6c
-
-    # Ylog dir on /data partition
-    mkdir /data/vendor 0751 root root
-    mkdir /data/vendor/local 0751 root root
-
-    # slogmodem config dir
-    mkdir /data/vendor/ylog 0770 shell system
-    mkdir /data/vendor/local/slogmodem 0770 shell system
-    mkdir /data/vendor/local/mlogservice 0770 shell system
-    mkdir /mnt/vendor/sensorhub 0777 system root
-    mkdir /mnt/vendor/productinfo 0771 system root
-    mkdir /mnt/vendor/productinfo/sensor_calibration_data 0770 system root
-    mkdir /data/vendor/local/otpdata 0777 system root
-
-on property:ro.debuggable=1
-    write /sys/module/smsg/parameters/debug_enable 1
