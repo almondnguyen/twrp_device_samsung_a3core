@@ -68,7 +68,7 @@ BOARD_SAMSUNG_SPRD_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor product sy
 BOARD_USES_METADATA_PARTITION := true
 
 # System as root
-BOARD_ROOT_EXTRA_FOLDERS := cache carrier efs optics prism omr odm
+BOARD_ROOT_EXTRA_FOLDERS := cache carrier efs optics prism omr odm socko odmko
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 AB_OTA_UPDATER := false
