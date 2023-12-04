@@ -27,6 +27,6 @@
 
 # a3core
 /mnt/vendor       ext4    /dev/block/by-name/prodnv                         flags=backup=1;display="Prod NVRAM"
-/mnt/vendor/socko ext4    /dev/block/by-name/socko                          flags=backup=1;display="SoC Kernel modules"
-/mnt/vendor/odmko ext4    /dev/block/by-name/odmko                          flags=backup=1;display="ODM Kernel modules"
+/socko            ext4    /dev/block/by-name/socko                          flags=backup=1;display="SoC Kernel modules"
+/odmko            ext4    /dev/block/by-name/odmko                          flags=backup=1;display="ODM Kernel modules"
 
