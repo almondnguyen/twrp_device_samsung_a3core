@@ -21,5 +21,13 @@ on post-fs
     insmod ${ro.vendor.ko.mount.point}/socko/ilitek-tddi.ko
     insmod ${ro.vendor.ko.mount.point}/socko/gcore_7202h.ko
     
+    chown system system sys/class/sec/tsp/input/enabled
+    chmod 664 sys/class/sec/tsp/input/enabled
+    
     insmod ${ro.vendor.ko.mount.point}/socko/pvrsrvkm.ko
     insmod ${ro.vendor.ko.mount.point}/socko/sprdwl_ng.ko
+    
+# from vendor/etc/init/vendor.samsung.hardware.sysinput@1.1-service.rc
+on early-boot
+    chown system system /dev/tspio
+    chown system system /sys/class/sec/tsp/enable
