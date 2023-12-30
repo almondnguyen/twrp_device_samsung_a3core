@@ -17,7 +17,7 @@
 #
 
 DEVICE_PATH := device/samsung/a3core
-TARGET_BUILD_64BIT := true
+TARGET_BUILD_64BIT :=
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
