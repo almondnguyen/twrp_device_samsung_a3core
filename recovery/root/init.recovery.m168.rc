@@ -1,4 +1,10 @@
-on init    
+# from vendor/etc/init/vendor.samsung.hardware.sysinput@1.1-service.rc
+on early-boot
+    chown system system /dev/tspio
+    chown system system /sys/class/sec/tsp/enable
+
+on init
+    # from recovery: init.recovery.samsung.rc
     # unlink /efs > /mnt/vendor/efs
     rm /efs
     mkdir /efs
@@ -7,27 +13,17 @@ on init
     chown system root /proc/cpwcn/wdtirq
     chmod 766 /proc/cpwcn/wdtirq
 
-on late-init
-    setprop ro.debuggable 1
-    setprop sys.usb.configfs 1
-
-#al: load necessary kernel modules in socko and odmko
 on post-fs
     # from vendor/etc/init/init.md.rc
-    insmod ${ro.vendor.ko.mount.point}/socko/ant_check_div.ko
     insmod ${ro.vendor.ko.mount.point}/socko/nt36xxx_ss.ko
     insmod ${ro.vendor.ko.mount.point}/socko/chipone-tddi_ss.ko
     insmod ${ro.vendor.ko.mount.point}/socko/gcore_ss.ko
-    insmod ${ro.vendor.ko.mount.point}/socko/ilitek-tddi.ko
-    insmod ${ro.vendor.ko.mount.point}/socko/gcore_7202h.ko
-    
+
     chown system system sys/class/sec/tsp/input/enabled
     chmod 664 sys/class/sec/tsp/input/enabled
-    
-    insmod ${ro.vendor.ko.mount.point}/socko/pvrsrvkm.ko
-    insmod ${ro.vendor.ko.mount.point}/socko/sprdwl_ng.ko
-    
-# from vendor/etc/init/vendor.samsung.hardware.sysinput@1.1-service.rc
-on early-boot
-    chown system system /dev/tspio
-    chown system system /sys/class/sec/tsp/enable
+
+on post-fs-data
+    chown system system /proc/tp_gesture
+    chmod 0660 /proc/tp_gesture
+    chown system system /proc/icn85xx_tool
+    chmod 0660 /proc/icn85xx_tool
